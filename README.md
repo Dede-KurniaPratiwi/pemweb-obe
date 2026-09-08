@@ -1,6 +1,8 @@
 # Portal Transparansi Warisan & Aset Pusaka Keluarga
-
-Repositori ini dikembangkan sebagai bagian dari Tugas Praktikum Modul 2 Pemrograman Web. Proyek ini berfokus pada perbaikan struktur kode HTML dasar menjadi HTML5 yang semantik, pemenuhan standar aksesibilitas web (*accessibility*), serta penerapan manajemen kontrol versi menggunakan Git.
+## Tugas: Dokumentasi Proyek Individu
+* **Nama: Dede Kurnia Pratiwi**
+* **NPM: 2440304028** 
+* **Mata Kuliah: Pemrograman Web** 
 
 ## Informasi Proyek
 * **Nama Proyek**: Portal Transparansi Warisan & Aset Pusaka Keluarga
