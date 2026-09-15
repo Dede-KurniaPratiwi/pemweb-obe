@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Warisan & Aset Pusaka Keluarga</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Skip Link untuk Aksesibilitas -->
+    <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+    <div class="dashboard-wrapper">
+        
+        <!-- SIDEBAR MENU -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h2>WarisanPusaka</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="active">Beranda Utama</a>
+                <a href="#">Daftar Aset & Surat</a>
+                <a href="#">Pembagian Saham</a>
+                <a href="#">Pengajuan Pencairan</a>
+                <a href="#">Hukum & Regulasi</a>
+                <a href="#">Kotak Sanggahan</a>
+            </nav>
+        </aside>
+
+        <!-- KONTEN UTAMA -->
+        <div class="main-container">
+            
+            <!-- TOP BAR (Simulasi Login / Info User) -->
+            <header class="topbar">
+                <div class="welcome-text">
+                    <h1>Dashboard Transparansi Aset Keluarga</h1>
+                    <p>Selamat datang, dipantau di bawah pengawasan Notaris.</p>
+                </div>
+                <div class="user-profile">
+                    <span class="role-badge">Peran: Kepala Keluarga</span>
+                    <div class="avatar-placeholder" aria-label="Foto Profil Pengguna"></div>
+                </div>
+            </header>
+
+            <main id="main-content" class="content-grid">
+                
+                <!-- KOTAK 1: Ringkasan Nilai Aset (Grid Card) -->
+                <section class="card summary-card">
+                    <h2>Total Valuasi Aset</h2>
+                    <div class="stat-number">Rp 12.500.000.000</div>
+                    <p class="stat-desc">Terdiri dari tanah, properti, dan saham perusahaan keluarga.</p>
+                </section>
+
+                <!-- KOTAK 2: Status Akses & Keamanan -->
+                <section class="card security-card">
+                    <h2>Status Keamanan Akun</h2>
+                    <ul>
+                        <li>Metode Login: Terverifikasi (PIN Unik Aktif)</li>
+                        <li>Hak Edit: <strong class="restricted">Terkunci (Hanya Notaris atas Izin)</strong></li>
+                    </ul>
+                </section>
+
+                <!-- KOTAK 3: Grafik / Rincian Pembagian Saham (Simulasi Grid Luas) -->
+              <!-- KOTAK: Rincian Pembagian Warisan & Saham (Sengketa Dobel Pewaris: Kakek & Nenek) -->
+                <section class="card wide-card">
+                    <h2>Rincian Pembagian Warisan (Kasus Almarhum Kakek & Almarhumah Nenek)</h2>
+                    <p>Harta peninggalan lintas generasi yang belum terbagi dan menjadi objek sengketa:</p>
+                    <div class="share-bars">
+                        <div class="bar-item">
+                            <span>Almarhum Kakek & Almarhumah Nenek (Punya Harta Bersama Belum Terbagi) - 30%</span>
+                            <div class="progress-bar"><div class="fill" style="width: 30%; background-color: #dc2626;"></div></div>
+                        </div>
+                        <div class="bar-item">
+                            <span>Ahli Waris 1 (Anak Pertama) - 14%</span>
+                            <div class="progress-bar"><div class="fill" style="width: 14%;"></div></div>
+                        </div>
+                        <div class="bar-item">
+                            <span>Ahli Waris 2 (Anak Kedua) - 14%</span>
+                            <div class="progress-bar"><div class="fill" style="width: 14%;"></div></div>
+                        </div>
+                        <div class="bar-item">
+                            <span>Ahli Waris 3 (Anak Ketiga) - 14%</span>
+                            <div class="progress-bar"><div class="fill" style="width: 14%;"></div></div>
+                        </div>
+                        <div class="bar-item">
+                            <span>Ahli Waris 4 (Anak Keempat) - 14%</span>
+                            <div class="progress-bar"><div class="fill" style="width: 14%;"></div></div>
+                        </div>
+                        <div class="bar-item">
+                            <span>Ahli Waris 5 (Anak Kelima) - 14%</span>
+                            <div class="progress-bar"><div class="fill" style="width: 14%;"></div></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- KOTAK 4: Form Simulasi Sanggahan / Pengaduan -->
+                <section class="card form-card">
+                    <h2>Ajukan Perundingan / Sanggahan</h2>
+                    <form>
+                        <div>
+                            <label for="nama-sanggah">Nama Ahli Waris:</label>
+                            <input type="text" id="nama-sanggah" name="nama-sanggah" placeholder="Masukkan nama lengkap">
+                        </div>
+                        <div>
+                            <label for="alasan-sanggah">Alasan Ketidaksesuaian Hukum:</label>
+                            <input type="text" id="alasan-sanggah" name="alasan-sanggah" placeholder="Tuliskan argumen perundingan">
+                        </div>
+                        <button type="button">Kirim Pengajuan Sanggahan</button>
+                    </form>
+                </section>
+
+            </main>
+
+            <!-- FOOTER -->
+            <footer>
+                <p>&copy; 2026 Portal Warisan & Aset Pusaka Keluarga. Dilindungi Undang-Undang Pengelolaan Aset.</p>
+                <a href="https://github.com" target="_blank" aria-label="Tautan menuju repositori GitHub proyek portal warisan">
+                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22'></path></svg>" alt=""> Repositori GitHub Proyek
+                </a>
+            </footer>
+
+        </div>
+    </div>
+
+</body>
+</html>
