@@ -1,8 +1,13 @@
-# AI Usage Log - Tugas 2 Pemrograman Web
+# AI Usage Log - Family Heritage & Asset Portal
 
-| No | Tanggal | Bagian / Modul | Prompt / Topik Diskusi | Kontribusi AI | Verifikasi & Penyesuaian Mandiri |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | 2026-09-08 | HTML5 Semantik & Aksesibilitas | Penentuan elemen tag semantik utama, hirarki heading, dan struktur atribut *alt text* serta relasi *label* form. | Menyediakan referensi struktur tag semantik (`<header>`, `<nav>`, `<main>`, `<section>`, `<footer>`), contoh penulisan atribut deskriptif, dan pengikatan atribut `for` pada *label*. | Menguji ulang keterbacaan elemen menggunakan navigasi tombol `Tab`, memvalidasi struktur heading secara hierarkis, dan menyesuaikan layout dengan kebutuhan lokal. |
-| 2 | 2026-09-08 | Manajemen Git & Terminal | Urutan perintah *branching*, *commit* bertahap, penanganan status *working tree*, dan penggabungan *branch* fitur ke *main*. | Memberikan panduan baris perintah terminal Git untuk pembuatan *branch* (`feature/struktur-home`), *commit* terstruktur, serta proses *merge*. | Mengeksekusi manual baris perintah di terminal Laragon 5, memeriksa konflik (jika ada), dan memverifikasi riwayat *commit* secara lokal. |
-| 3 | 2026-09-08 | Dokumentasi Proyek | Konsultasi penyusunan poin dokumentasi `README.md` dan struktur tabel pelaporan log. | Memberikan draf kerangka tata letak teks dokumentasi serta format tabel markdown. | Menyeleksi, menyunting ulang kalimat, dan mengetik sendiri seluruh isi dokumentasi akhir agar sesuai dengan hasil implementasi koding personal. |
-| 4 | 2026-09-08 | Finalisasi Bagian 4 & AI Usage Log | Konsultasi tata letak log interaksi dan format penyusunan laporan bagian 4.c. | Menyediakan format tabel markdown dan draf ringkas aktivitas harian. | Menyeleksi, mengetik, mengeksekusi commit Git, dan memastikan seluruh substansi keputusan murni hasil karya pribadi. |
+Dokumen ini mencatat penggunaan alat kecerdasan buatan (AI) sebagai kolaborator dalam proses perancangan, pengembangan, dan penyelesaian proyek web ini.
+
+## Detail Kolaborasi AI
+
+| No | Tanggal / Sesi | Bagian Proyek | Peran & Bantuan AI | Catatan / Validasi Pengguna |
+| :-- | :-- | :-- | :-- | :-- |
+| 1 | Sesi Pengembangan Awal | Struktur HTML & Desain CSS | • Membantu menyusun kerangka dokumen `index.html`<br>• Memberikan rancangan tata letak CSS untuk *Family Heritage & Asset Portal* | Kode ditinjau, disesuaikan secara manual, dan diuji langsung pada lingkungan lokal Laragon (`C:\laragon\www\pemweb-obe`). |
+| 2 | Sesi Deploy & Konfigurasi | Pengaturan Git & GitHub | • Memberikan panduan troubleshooting perintah terminal saat inisialisasi Git<br>• Membantu mengatasi kendala konfigurasi identitas repositori lokal | Perintah Git dijalankan secara bertahap melalui terminal VS Code hingga berhasil terhubung ke repositori publik. |
+
+## Pernyataan Penggunaan
+Semua kode, struktur teks, dan komponen antarmuka yang dihasilkan dengan bantuan AI telah melalui proses peninjauan, pengujian, serta penyesuaian secara mandiri oleh pengembang guna memastikan fungsionalitas dan kesesuaiannya dengan kebutuhan proyek.
