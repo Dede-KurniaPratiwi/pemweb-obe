@@ -49,7 +49,7 @@
                 <section class="card summary-card">
                     <h2>Total Valuasi Aset</h2>
                     <div class="stat-number">Rp 12.500.000.000</div>
-                    <p class="stat-desc">Terdiri dari tanah, properti, dan saham perusahaan keluarga.</p>
+                    <p class="stat-desc">Terdiri dari tanah, properti, emas, harta pusaka keluarga, barang peninggalan dan saham perusahaan keluarga.</p>
                 </section>
 
                 <!-- KOTAK 2: Status Akses & Keamanan -->
@@ -61,8 +61,7 @@
                     </ul>
                 </section>
 
-                <!-- KOTAK 3: Grafik / Rincian Pembagian Saham (Simulasi Grid Luas) -->
-              <!-- KOTAK: Rincian Pembagian Warisan & Saham (Sengketa Dobel Pewaris: Kakek & Nenek) -->
+                <!-- KOTAK 3: Rincian Pembagian Warisan & Saham -->
                 <section class="card wide-card">
                     <h2>Rincian Pembagian Warisan (Kasus Almarhum Kakek & Almarhumah Nenek)</h2>
                     <p>Harta peninggalan lintas generasi yang belum terbagi dan menjadi objek sengketa:</p>
@@ -97,16 +96,16 @@
                 <!-- KOTAK 4: Form Simulasi Sanggahan / Pengaduan -->
                 <section class="card form-card">
                     <h2>Ajukan Perundingan / Sanggahan</h2>
-                    <form>
+                    <form id="form-sanggahan">
                         <div>
                             <label for="nama-sanggah">Nama Ahli Waris:</label>
-                            <input type="text" id="nama-sanggah" name="nama-sanggah" placeholder="Masukkan nama lengkap">
+                            <input type="text" id="nama-sanggah" name="nama-sanggah" placeholder="Masukkan nama lengkap" required>
                         </div>
                         <div>
                             <label for="alasan-sanggah">Alasan Ketidaksesuaian Hukum:</label>
-                            <input type="text" id="alasan-sanggah" name="alasan-sanggah" placeholder="Tuliskan argumen perundingan">
+                            <input type="text" id="alasan-sanggah" name="alasan-sanggah" placeholder="Tuliskan argumen perundingan" required>
                         </div>
-                        <button type="button">Kirim Pengajuan Sanggahan</button>
+                        <button type="submit">Kirim Pengajuan Sanggahan</button>
                     </form>
                 </section>
 
@@ -120,8 +119,10 @@
                 </a>
             </footer>
 
-        </div>
-    </div>
+        </div> <!-- Tutup .main-container -->
+    </div> <!-- Tutup .dashboard-wrapper -->
 
+    <!-- PENGHUBUNG JAVASCRIPT MODULE -->
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>
