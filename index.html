@@ -52,7 +52,7 @@
                 <!-- KOTAK 1: Ringkasan Nilai Aset (Grid Card) -->
                 <section class="card summary-card">
                     <h2>Total Valuasi Aset</h2>
-                    <div class="stat-number">Rp 15.500.000.000</div>
+                    <div class="stat-number">Rp 12.500.000.000</div>
                     <p class="stat-desc">Terdiri dari tanah, properti, emas, harta pusaka keluarga, barang peninggalan dan saham perusahaan keluarga.</p>
                 </section>
 
@@ -68,7 +68,7 @@
                 <!-- KOTAK 3: Rincian Pembagian Warisan & Saham -->
                 <section class="card wide-card">
                     <h2>Rincian Pembagian Warisan (Kasus Almarhum Kakek & Almarhumah Nenek)</h2>
-                    <p>Harta peninggalan lintas generasi yang belum terbagi dan menjadi objek sengketa:</p>
+                    <p>Harta peninggalan lintas generasi yang belum terbagi dan teridentifikasi menjadi objek sengketa:</p>
                     <div class="share-bars">
                         <div class="bar-item">
                             <span>Almarhum Kakek & Almarhumah Nenek (Punya Harta Bersama Belum Terbagi) - 30%</span>
@@ -97,19 +97,51 @@
                     </div>
                 </section>
 
-                <!-- KOTAK 4: Form Simulasi Sanggahan / Pengaduan (Hanya 1, Tanpa Duplikat) -->
+                <!-- KOTAK 4: Form Pendataan & Validasi Aset (Modul 6) -->
                 <section class="card form-card">
-                    <h2>Ajukan Perundingan / Sanggahan</h2>
-                    <form id="form-sanggahan">
-                        <div>
-                            <label for="nama-sanggah">Nama Ahli Waris:</label>
-                            <input type="text" id="nama-sanggah" name="nama-sanggah" placeholder="Masukkan nama lengkap" required>
+                    <h2>Form Pendataan & Validasi Aset</h2>
+                    <form id="form-alat" novalidate>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label for="nama">Nama Alat / Aset:</label>
+                            <input type="text" id="nama" name="nama" required minlength="3" placeholder="Masukkan nama aset" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 0.75rem; background-color: var(--bg-main); color: var(--text-main);">
+                            <small id="error-nama" class="error" style="color: #dc2626; display: block; margin-top: 0.25rem;"></small>
                         </div>
-                        <div>
-                            <label for="alasan-sanggah">Alasan Ketidaksesuaian Hukum:</label>
-                            <input type="text" id="alasan-sanggah" name="alasan-sanggah" placeholder="Tuliskan argumen perundingan" required>
+
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label for="kategori">Kategori:</label>
+                            <select id="kategori" name="kategori" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 0.75rem; background-color: var(--bg-main); color: var(--text-main);">
+                                <option value="">Pilih Kategori...</option>
+                                <option value="Tanah & Properti">Tanah & Properti</option>
+                                <option value="Barang Pusaka">Barang Pusaka</option>
+                                <option value="Saham & Surat Berharga">Saham & Surat Berharga</option>
+                            </select>
+                            <small id="error-kategori" class="error" style="color: #dc2626; display: block; margin-top: 0.25rem;"></small>
                         </div>
-                        <button type="submit">Kirim Pengajuan Sanggahan</button>
+
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label for="jumlah">Jumlah:</label>
+                            <input type="number" id="jumlah" name="jumlah" required min="0" placeholder="Masukkan jumlah" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 0.75rem; background-color: var(--bg-main); color: var(--text-main);">
+                            <small id="error-jumlah" class="error" style="color: #dc2626; display: block; margin-top: 0.25rem;"></small>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label for="kondisi">Kondisi:</label>
+                            <select id="kondisi" name="kondisi" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 0.75rem; background-color: var(--bg-main); color: var(--text-main);">
+                                <option value="">Pilih Kondisi...</option>
+                                <option value="Baik">Baik</option>
+                                <option value="Perlu Cek">Perlu Cek</option>
+                            </select>
+                            <small id="error-kondisi" class="error" style="color: #dc2626; display: block; margin-top: 0.25rem;"></small>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label for="tanggal">Tanggal Perolehan:</label>
+                            <input type="date" id="tanggal" name="tanggal" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 0.75rem; background-color: var(--bg-main); color: var(--text-main);">
+                            <small id="error-tanggal" class="error" style="color: #dc2626; display: block; margin-top: 0.25rem;"></small>
+                        </div>
+
+                        <button type="submit" style="padding: 0.75rem 1.5rem; border-radius: 0.75rem; border: none; background: #2563eb; color: white; cursor: pointer; font-weight: bold;">Simpan Data Aset</button>
+                        <p id="form-status" style="margin-top: 1rem; font-weight: bold;"></p>
                     </form>
                 </section>
 
@@ -141,7 +173,7 @@
             <!-- FOOTER -->
             <footer>
                 <p>&copy; 2026 Portal Warisan & Aset Pusaka Keluarga. Dilindungi Undang-Undang Pengelolaan Aset.</p>
-                <a href="https://github.com" target="_blank" aria-label="Tautan menuju repositori GitHub proyek portal warisan">
+                <a href="https://github.com" target="_blank" aria-label="Tautan menuju repositori GitHub portal warisan">
                     <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22'></path></svg>" alt=""> Repositori GitHub Proyek
                 </a>
             </footer>

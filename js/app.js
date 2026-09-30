@@ -51,12 +51,11 @@ console.log('=== RINGKASAN STRING SETIAP ASET (SOAL 3) ===');
 const hasilRingkasan = buatRingkasanAset(inventaris);
 hasilRingkasan.forEach(ringkasan => console.log(ringkasan));
 
-// Pemanggilan fungsi ringkasInventaris dari utils.js
 console.log('=== RINGKASAN INVENTARIS DARI UTILS ===');
 console.log(ringkasInventaris(inventaris));
 
 
-// --- SEMUA INTERAKSI DOM & EVENT LISTENER (SATU KESATUAN) ---
+// --- SEMUA INTERAKSI DOM & EVENT LISTENER (MODUL 5 & MODUL 6) ---
 document.addEventListener('DOMContentLoaded', () => {
     
     // --- PENGAMAN UTAMA: Mencegah link kosong (href="#") menarik halaman ke atas ---
@@ -67,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 1. Pemulihan Tema dari localStorage dengan pengaman mutlak
+    // 1. Pemulihan Tema dari localStorage
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
 
@@ -77,14 +76,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
         const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
         
-        // Terapkan perubahan atribut langsung ke elemen <html>
         document.documentElement.setAttribute('data-theme', nextTheme);
         localStorage.setItem('theme', nextTheme);
       });
     }
 
     // 2. Fungsi Render Item secara Aman (Cegah XSS)
-   const daftar = document.querySelector('#daftar-alat');
+    const daftar = document.querySelector('#daftar-alat');
 
     function renderItems(items) {
       if (!daftar) return;
@@ -112,10 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
         btnDetail.dataset.id = item.id;
         btnDetail.className = 'btn-detail';
 
-        // Wadah khusus untuk keterangan detail di bawah (awalnya tersembunyi)
         const detailContainer = document.createElement('div');
         detailContainer.className = 'detail-container';
-        detailContainer.style.display = 'none'; // Sembunyikan secara default
+        detailContainer.style.display = 'none';
         detailContainer.innerHTML = `
           <hr style="border:0; border-top:1px dashed var(--border); margin: 8px 0;">
           <p style="margin: 0; font-size: 0.78rem; color: var(--text-main);">
@@ -130,7 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Render awal menampilkan seluruh inventaris
     renderItems(inventaris);
 
     // 3. Interaksi Filter berdasarkan Tombol
@@ -165,7 +161,6 @@ document.addEventListener('DOMContentLoaded', () => {
           const card = e.target.closest('.inventaris-card');
           const detailContainer = card.querySelector('.detail-container');
           
-          // Toggle tampil/sembunyi di bawah kartu
           if (detailContainer.style.display === 'none') {
             detailContainer.style.display = 'block';
             e.target.textContent = 'Tutup';
@@ -177,52 +172,102 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // 6. Event Listener Form Sanggahan (Menggunakan Modal Kustom)
-    const formSanggah = document.getElementById('form-sanggahan');
-    const modal = document.getElementById('custom-modal');
-    const modalMessage = document.getElementById('modal-message');
-    const closeBtn = document.getElementById('modal-close-btn');
+    // 6. MODUL 6: VALIDASI FORM PENDATAAN ASET & LATIHAN
+    const formAlat = document.querySelector('#form-alat');
+    const formStatus = document.querySelector('#form-status');
 
-    function showNotification(pesan) {
-        if (modal && modalMessage) {
-            modalMessage.textContent = pesan;
-            modal.style.display = 'flex';
+    function validateForm(data) {
+        const errors = {};
+        
+        // --- 1. LATIHAN: Pesan Error Berbeda untuk Field Kosong & Format Tidak Valid (Nama) ---
+        const nama = String(data.get('nama') ?? '').trim();
+        if (!nama) {
+            errors.nama = 'Nama alat / aset wajib diisi.';
+        } else if (nama.length < 3) {
+            errors.nama = 'Format tidak valid: Nama alat minimal harus 3 karakter.';
         }
-    }
 
-    function hideNotification() {
-        if (modal) {
-            modal.style.display = 'none';
+        // --- 2. LATIHAN: Validasi Kategori Hanya Boleh dari Pilihan yang Tersedia ---
+        const kategori = String(data.get('kategori') ?? '');
+        const kategoriValid = ['Legal', 'Dokumen', 'Berharga', 'Properti', 'Saham', 'Pusaka'];
+        if (!kategori) {
+            errors.kategori = 'Kategori wajib dipilih.';
+        } else if (!kategoriValid.includes(kategori)) {
+            errors.kategori = 'Format/Pilihan kategori tidak valid.';
         }
-    }
 
-    if (closeBtn) {
-        closeBtn.addEventListener('click', hideNotification);
-    }
+        // --- 3. LATIHAN: Pesan Error Berbeda untuk Field Kosong & Format Tidak Valid (Jumlah) ---
+        const jumlahVal = data.get('jumlah');
+        const jumlah = Number(jumlahVal);
+        if (jumlahVal === '' || jumlahVal === null) {
+            errors.jumlah = 'Jumlah wajib diisi.';
+        } else if (!Number.isInteger(jumlah) || jumlah < 0) {
+            errors.jumlah = 'Format tidak valid: Jumlah harus bilangan bulat 0 atau lebih.';
+        }
 
-    if (modal) {
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                hideNotification();
-            }
-        });
-    }
+        // Validasi Kondisi
+        const kondisi = String(data.get('kondisi') ?? '');
+        const kondisiValid = ['Baik', 'Perlu Cek'];
+        if (!kondisi) {
+            errors.kondisi = 'Kondisi wajib dipilih.';
+        } else if (!kondisiValid.includes(kondisi)) {
+            errors.kondisi = 'Kondisi yang dipilih tidak valid.';
+        }
 
-    if (formSanggah) {
-        formSanggah.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const nama = document.getElementById('nama-sanggah').value;
-            const alasan = document.getElementById('alasan-sanggah').value;
-
-            // Memanggil modal kustom menggantikan alert()
-            showNotification(`Terima kasih ${nama}, sanggahan Anda terkait "${alasan}" telah dicatat.`);
+        // --- 4. LATIHAN: Validasi Tanggal Perolehan Tidak Melebihi Hari Ini ---
+        const tanggalStr = data.get('tanggal');
+        if (!tanggalStr) {
+            errors.tanggal = 'Tanggal perolehan wajib diisi.';
+        } else {
+            const inputDate = new Date(tanggalStr);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
             
-            formSanggah.reset();
+            if (inputDate > today) {
+                errors.tanggal = 'Format tidak valid: Tanggal perolehan tidak boleh melebihi hari ini.';
+            }
+        }
 
-            // Auto-close setelah 5 detik
-            setTimeout(() => {
-                hideNotification();
-            }, 5000);
+        return errors;
+    }
+
+    if (formAlat) {
+        formAlat.addEventListener('submit', event => {
+            event.preventDefault();
+            
+            const data = new FormData(formAlat);
+            const errors = validateForm(data);
+
+            // Bersihkan pesan error dan atribut aksesibilitas sebelumnya
+            document.querySelectorAll('.error').forEach(el => el.textContent = '');
+            formAlat.querySelectorAll('[aria-invalid="true"]').forEach(el => el.removeAttribute('aria-invalid'));
+
+            // Jika ada error validasi
+            if (Object.keys(errors).length > 0) {
+                for (const [field, message] of Object.entries(errors)) {
+                    const errorElement = document.querySelector(`#error-${field}`);
+                    if (errorElement) {
+                        errorElement.textContent = message;
+                    }
+                    formAlat.elements[field]?.setAttribute('aria-invalid', 'true');
+                }
+
+                // Fokus ke field error pertama (Aksesibilitas Modul 6)
+                const firstField = Object.keys(errors)[0];
+                formAlat.elements[firstField]?.focus();
+                
+                if (formStatus) {
+                    formStatus.textContent = 'Periksa kembali data yang belum valid.';
+                    formStatus.style.color = '#dc2626';
+                }
+                return;
+            }
+
+            // Jika valid
+            if (formStatus) {
+                formStatus.textContent = 'Data valid dan siap dikirim (simulasi berhasil).';
+                formStatus.style.color = '#16a34a';
+            }
         });
     }
 });
