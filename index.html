@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +18,7 @@
             <div class="sidebar-brand">
                 <h2>WarisanPusaka</h2>
             </div>
+
             <nav class="sidebar-nav">
                 <a href="#" class="active">Beranda Utama</a>
                 <a href="#">Daftar Aset & Surat</a>
@@ -38,6 +39,9 @@
                     <p>Selamat datang, dipantau di bawah pengawasan Notaris.</p>
                 </div>
                 <div class="user-profile">
+                    <button id="theme-button" type="button" style="padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid var(--border); background: var(--surface); color: var(--text-main); cursor: pointer;">
+                        Ganti Tema 🌓
+                    </button>
                     <span class="role-badge">Peran: Kepala Keluarga</span>
                     <div class="avatar-placeholder" aria-label="Foto Profil Pengguna"></div>
                 </div>
@@ -48,7 +52,7 @@
                 <!-- KOTAK 1: Ringkasan Nilai Aset (Grid Card) -->
                 <section class="card summary-card">
                     <h2>Total Valuasi Aset</h2>
-                    <div class="stat-number">Rp 12.500.000.000</div>
+                    <div class="stat-number">Rp 15.500.000.000</div>
                     <p class="stat-desc">Terdiri dari tanah, properti, emas, harta pusaka keluarga, barang peninggalan dan saham perusahaan keluarga.</p>
                 </section>
 
@@ -93,7 +97,7 @@
                     </div>
                 </section>
 
-                <!-- KOTAK 4: Form Simulasi Sanggahan / Pengaduan -->
+                <!-- KOTAK 4: Form Simulasi Sanggahan / Pengaduan (Hanya 1, Tanpa Duplikat) -->
                 <section class="card form-card">
                     <h2>Ajukan Perundingan / Sanggahan</h2>
                     <form id="form-sanggahan">
@@ -109,6 +113,29 @@
                     </form>
                 </section>
 
+                <!-- Bagian Interaktif Modul 5 -->
+                <section class="card panel-interaktif">
+                    <h2>Manajemen Aset & Filter</h2>
+ 
+                    <!-- Kotak Pencarian -->
+                    <div style="margin-bottom: 1rem;">
+                        <input type="text" id="input-pencarian" placeholder="Cari nama aset..." style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 0.75rem; background-color: var(--bg-main); color: var(--text-main);" />
+                    </div>
+
+                    <!-- Tombol Filter Kondisi -->
+                    <div class="filter-group" style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                        <button type="button" data-filter="Semua" style="padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid var(--border); background: var(--surface); color: var(--text-main); cursor: pointer;">Semua</button>
+                        <button type="button" data-filter="Baik" style="padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid var(--border); background: var(--surface); color: var(--text-main); cursor: pointer;">Baik</button>
+                        <button type="button" data-filter="Perlu Cek" style="padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid var(--border); background: var(--surface); color: var(--text-main); cursor: pointer;">Perlu Cek</button>
+                    </div>
+                </section>
+
+                <!-- Container Tempat Render Dinamis -->
+                <section class="card wide-card">
+                    <h2>Daftar Inventaris Aset (Render DOM Dinamis)</h2>
+                    <div id="daftar-alat" class="grid-aset" style="margin-top: 1rem; display: grid; gap: 1rem;"></div>
+                </section>
+
             </main>
 
             <!-- FOOTER -->
@@ -119,8 +146,17 @@
                 </a>
             </footer>
 
-        </div> <!-- Tutup .main-container -->
-    </div> <!-- Tutup .dashboard-wrapper -->
+        </div>
+    </div> 
+
+    <!-- Kustom Modal Sanggahan -->
+    <div id="custom-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content-box">
+            <button id="modal-close-btn" class="modal-close">&times;</button>
+            <h3 id="modal-title">Pemberitahuan</h3>
+            <p id="modal-message">Pesan sukses akan tampil di sini...</p>
+        </div>
+    </div>
 
     <!-- PENGHUBUNG JAVASCRIPT MODULE -->
     <script type="module" src="js/app.js"></script>
