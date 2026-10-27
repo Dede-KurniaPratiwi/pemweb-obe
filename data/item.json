@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "nama": "Sertifikat Tanah",
+    "kategori": "Legal",
+    "jumlah": 2,
+    "kondisi": "Baik",
+    "lokasi": "Brankas Utama Notaris"
+  },
+  {
+    "id": 2,
+    "nama": "Arsip Surat Berharga Keluarga",
+    "kategori": "Dokumen",
+    "jumlah": 15,
+    "kondisi": "Baik",
+    "lokasi": "Ruang Arsip Khusus"
+  },
+  {
+    "id": 3,
+    "nama": "Perhiasan Emas Warisan",
+    "kategori": "Berharga",
+    "jumlah": 5,
+    "kondisi": "Perlu Cek",
+    "lokasi": "Kotak Deposit Bank"
+  },
+  {
+    "id": 4,
+    "nama": "Properti Ruko Komersial",
+    "kategori": "Properti",
+    "jumlah": 1,
+    "kondisi": "Baik",
+    "lokasi": "Kantor Pengelola"
+  },
+  {
+    "id": 5,
+    "nama": "Saham Perusahaan Keluarga",
+    "kategori": "Saham",
+    "jumlah": 1000,
+    "kondisi": "Baik",
+    "lokasi": "Portofolio Digital"
+  },
+  {
+    "id": 6,
+    "nama": "Barang Peninggalan Keluarga",
+    "kategori": "Pusaka",
+    "jumlah": 8,
+    "kondisi": "Perlu Cek",
+    "lokasi": "Ruang Khusus Pusaka"
+  }
+]
