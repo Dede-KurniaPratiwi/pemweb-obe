@@ -1,0 +1,8 @@
+{
+    "name": "pemweb-obe/portal-warisan",
+    "description": "Backend REST API Portal Transparansi Warisan Keluarga",
+    "type": "project",
+    "require": {
+        "php": ">=8.4"
+    }
+}
