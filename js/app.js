@@ -9,10 +9,10 @@ const inventaris = [
   { id: 6, nama: 'Barang Peninggalan Keluarga', kategori: 'Pusaka', jumlah: 8, kondisi: 'Perlu Cek', lokasi: 'Ruang Khusus Pusaka' }
 ];
 
-// Simulasi hak akses pengguna
+// Simulasi hak akses pengguna (Ubah ke "Notaris" untuk menguji hak akses hapus admin)
 const penggunaAktif = {
-  nama: "David Bloemhard",
-  peran: "Kepala Keluarga"
+  nama: "Dede Kurnia P",
+  peran: "Notaris"
 };
 
 function getAsetAman(user, targetLokasi) {
@@ -81,7 +81,74 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // 2. Fungsi Render Item secara Aman (Cegah XSS)
+    // --- MODAL KUSTOM DI TENGAH LAYAR UNTUK PEMBERITAHUAN HAPUS ---
+    function showCustomConfirm(message, onConfirm) {
+        const overlay = document.createElement('div');
+        overlay.style.position = 'fixed';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        overlay.style.display = 'flex';
+        overlay.style.justifyContent = 'center';
+        overlay.style.alignItems = 'center';
+        overlay.style.zIndex = '9999';
+
+        const modal = document.createElement('div');
+        modal.style.backgroundColor = '#ffffff';
+        modal.style.padding = '24px';
+        modal.style.borderRadius = '8px';
+        modal.style.maxWidth = '400px';
+        modal.style.width = '90%';
+        modal.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+        modal.style.textAlign = 'center';
+
+        const text = document.createElement('p');
+        text.textContent = message;
+        text.style.marginBottom = '20px';
+        text.style.color = '#333333';
+        text.style.fontSize = '1rem';
+
+        const btnContainer = document.createElement('div');
+        btnContainer.style.display = 'flex';
+        btnContainer.style.justifyContent = 'center';
+        btnContainer.style.gap = '12px';
+
+        const btnYes = document.createElement('button');
+        btnYes.textContent = 'Ya, Hapus';
+        btnYes.style.backgroundColor = '#dc2626';
+        btnYes.style.color = '#fff';
+        btnYes.style.border = 'none';
+        btnYes.style.padding = '8px 16px';
+        btnYes.style.borderRadius = '4px';
+        btnYes.style.cursor = 'pointer';
+
+        const btnNo = document.createElement('button');
+        btnNo.textContent = 'Batal';
+        btnNo.style.backgroundColor = '#e5e7eb';
+        btnNo.style.color = '#374151';
+        btnNo.style.border = 'none';
+        btnNo.style.padding = '8px 16px';
+        btnNo.style.borderRadius = '4px';
+        btnNo.style.cursor = 'pointer';
+
+        btnYes.addEventListener('click', () => {
+            document.body.removeChild(overlay);
+            onConfirm();
+        });
+
+        btnNo.addEventListener('click', () => {
+            document.body.removeChild(overlay);
+        });
+
+        btnContainer.append(btnYes, btnNo);
+        modal.append(text, btnContainer);
+        overlay.append(modal);
+        document.body.append(overlay);
+    }
+
+    // 2. Fungsi Render Item secara Aman (Cegah XSS) & Tombol Hapus Khusus Admin/Notaris
     const daftar = document.querySelector('#daftar-alat');
 
     function renderItems(items) {
@@ -122,35 +189,108 @@ document.addEventListener('DOMContentLoaded', () => {
             Jumlah Unit: ${item.jumlah}
           </p>
         `;
+
+        // --- PEMBATASAN HAK AKSES: Tombol Hapus Hanya Muncul untuk Peran Notaris (Admin) ---
+        if (penggunaAktif.peran === 'Notaris') {
+            const btnHapus = document.createElement('button');
+            btnHapus.textContent = 'Hapus Aset';
+            btnHapus.className = 'btn-hapus';
+            btnHapus.style.marginLeft = '8px';
+            btnHapus.style.backgroundColor = '#dc2626';
+            btnHapus.style.color = '#fff';
+            btnHapus.style.border = 'none';
+            btnHapus.style.padding = '6px 12px';
+            btnHapus.style.borderRadius = '4px';
+            btnHapus.style.cursor = 'pointer';
+
+            btnHapus.addEventListener('click', () => {
+                showCustomConfirm(`Yakin ingin menghapus aset "${item.nama}" dari database?`, async () => {
+                    try {
+                        const response = await fetch(`./api/alats.php?id=${item.id}`, {
+                            method: 'DELETE'
+                        });
+                        const result = await response.json();
+                        if (response.ok && result.status === 'success') {
+                            alert('Aset berhasil dihapus!');
+                            muatAsetDariDatabase(); // Refresh data setelah dihapus
+                        } else {
+                            alert('Gagal menghapus: ' + (result.error || 'Terjadi kesalahan'));
+                        }
+                    } catch (err) {
+                        console.error('Delete Error:', err);
+                        alert('Terjadi kesalahan jaringan saat menghapus data.');
+                    }
+                });
+            });
+
+            detailContainer.append(document.createElement('br'), btnHapus);
+        }
+
         article.append(title, info, btnDetail, detailContainer);
         daftar.append(article);
       }
     }
 
-    renderItems(inventaris);
+    // --- TAMBAHAN KONEKSI DATABASE PHP (Menarik data dari database) ---
+    async function muatAsetDariDatabase() {
+        try {
+            const response = await fetch('./api/alats.php');
+            const result = await response.json();
+            if (result.status === 'success' && result.data.length > 0) {
+                renderItems(result.data);
+            } else {
+                renderItems(inventaris); // Fallback ke array lokal jika kosong
+            }
+        } catch (error) {
+            console.error('Gagal memuat dari database, menggunakan data lokal:', error);
+            renderItems(inventaris);
+        }
+    }
+
+    muatAsetDariDatabase();
 
     // 3. Interaksi Filter berdasarkan Tombol
     const tombolFilter = document.querySelectorAll('[data-filter]');
     tombolFilter.forEach(button => {
-      button.addEventListener('click', () => {
+      button.addEventListener('click', async () => {
         const filter = button.dataset.filter;
-        const hasil = filter === 'Semua'
-          ? inventaris
-          : inventaris.filter(item => item.kondisi === filter);
-        renderItems(hasil);
+        try {
+            const endpoint = filter === 'Semua' ? './api/alats.php' : `./api/alats.php?kategori=${encodeURIComponent(filter)}`;
+            const response = await fetch(endpoint);
+            const result = await response.json();
+            if (result.status === 'success') {
+                renderItems(result.data);
+            }
+        } catch (e) {
+            const hasil = filter === 'Semua'
+              ? inventaris
+              : inventaris.filter(item => item.kondisi === filter || item.kategori === filter);
+            renderItems(hasil);
+        }
       });
     });
 
     // 4. Interaksi Pencarian Berdasarkan Nama/Kategori
     const inputPencarian = document.querySelector('#input-pencarian');
     if (inputPencarian) {
-      inputPencarian.addEventListener('input', (e) => {
+      inputPencarian.addEventListener('input', async (e) => {
         const keyword = e.target.value.toLowerCase();
-        const hasilCari = inventaris.filter(item => 
-          item.nama.toLowerCase().includes(keyword) || 
-          item.kategori.toLowerCase().includes(keyword)
-        );
-        renderItems(hasilCari);
+        try {
+            const response = await fetch('./api/alats.php');
+            const result = await response.json();
+            const sourceData = (result.status === 'success') ? result.data : inventaris;
+            const hasilCari = sourceData.filter(item => 
+              item.nama.toLowerCase().includes(keyword) || 
+              item.kategori.toLowerCase().includes(keyword)
+            );
+            renderItems(hasilCari);
+        } catch (err) {
+            const hasilCari = inventaris.filter(item => 
+              item.nama.toLowerCase().includes(keyword) || 
+              item.kategori.toLowerCase().includes(keyword)
+            );
+            renderItems(hasilCari);
+        }
       });
     }
 
@@ -179,7 +319,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function validateForm(data) {
         const errors = {};
         
-        // --- 1. LATIHAN: Pesan Error Berbeda untuk Field Kosong & Format Tidak Valid (Nama) ---
         const nama = String(data.get('nama') ?? '').trim();
         if (!nama) {
             errors.nama = 'Nama alat / aset wajib diisi.';
@@ -187,16 +326,14 @@ document.addEventListener('DOMContentLoaded', () => {
             errors.nama = 'Format tidak valid: Nama alat minimal harus 3 karakter.';
         }
 
-        // --- 2. LATIHAN: Validasi Kategori Hanya Boleh dari Pilihan yang Tersedia ---
         const kategori = String(data.get('kategori') ?? '');
-        const kategoriValid = ['Legal', 'Dokumen', 'Berharga', 'Properti', 'Saham', 'Pusaka'];
+        const kategoriValid = ['Legal', 'Dokumen', 'Berharga', 'Properti', 'Saham', 'Pusaka', 'Tanah & Properti', 'Barang Pusaka'];
         if (!kategori) {
             errors.kategori = 'Kategori wajib dipilih.';
         } else if (!kategoriValid.includes(kategori)) {
             errors.kategori = 'Format/Pilihan kategori tidak valid.';
         }
 
-        // --- 3. LATIHAN: Pesan Error Berbeda untuk Field Kosong & Format Tidak Valid (Jumlah) ---
         const jumlahVal = data.get('jumlah');
         const jumlah = Number(jumlahVal);
         if (jumlahVal === '' || jumlahVal === null) {
@@ -205,20 +342,16 @@ document.addEventListener('DOMContentLoaded', () => {
             errors.jumlah = 'Format tidak valid: Jumlah harus bilangan bulat 0 atau lebih.';
         }
 
-        // Validasi Kondisi
         const kondisi = String(data.get('kondisi') ?? '');
-        const kondisiValid = ['Baik', 'Perlu Cek'];
+        const kondisiValid = ['Baik', 'Perlu Cek', 'Rusak'];
         if (!kondisi) {
             errors.kondisi = 'Kondisi wajib dipilih.';
         } else if (!kondisiValid.includes(kondisi)) {
             errors.kondisi = 'Kondisi yang dipilih tidak valid.';
         }
 
-        // --- 4. LATIHAN: Validasi Tanggal Perolehan Tidak Melebihi Hari Ini ---
         const tanggalStr = data.get('tanggal');
-        if (!tanggalStr) {
-            errors.tanggal = 'Tanggal perolehan wajib diisi.';
-        } else {
+        if (tanggalStr) {
             const inputDate = new Date(tanggalStr);
             const today = new Date();
             today.setHours(0, 0, 0, 0);
@@ -232,17 +365,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (formAlat) {
-        formAlat.addEventListener('submit', event => {
+        formAlat.addEventListener('submit', async event => {
             event.preventDefault();
             
             const data = new FormData(formAlat);
             const errors = validateForm(data);
 
-            // Bersihkan pesan error dan atribut aksesibilitas sebelumnya
             document.querySelectorAll('.error').forEach(el => el.textContent = '');
             formAlat.querySelectorAll('[aria-invalid="true"]').forEach(el => el.removeAttribute('aria-invalid'));
 
-            // Jika ada error validasi
             if (Object.keys(errors).length > 0) {
                 for (const [field, message] of Object.entries(errors)) {
                     const errorElement = document.querySelector(`#error-${field}`);
@@ -252,7 +383,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     formAlat.elements[field]?.setAttribute('aria-invalid', 'true');
                 }
 
-                // Fokus ke field error pertama (Aksesibilitas Modul 6)
                 const firstField = Object.keys(errors)[0];
                 formAlat.elements[firstField]?.focus();
                 
@@ -263,11 +393,80 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Jika valid
-            if (formStatus) {
-                formStatus.textContent = 'Data valid dan siap dikirim (simulasi berhasil).';
-                formStatus.style.color = '#16a34a';
+            // --- TAMBAHAN PENGIRIMAN DATA KE DATABASE (POST ke alats.php) ---
+            const dataObj = Object.fromEntries(data.entries());
+            try {
+                const response = await fetch('./api/alats.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dataObj)
+                });
+                const result = await response.json();
+
+                if (!response.ok) throw new Error(result.error || 'Gagal menyimpan.');
+
+                if (formStatus) {
+                    formStatus.textContent = 'Data berhasil disimpan ke database!';
+                    formStatus.style.color = '#16a34a';
+                }
+                formAlat.reset();
+                muatAsetDariDatabase(); // Refresh daftar aset dari database
+            } catch (err) {
+                if (formStatus) {
+                    formStatus.textContent = 'Data valid dan siap dikirim (simulasi berhasil).';
+                    formStatus.style.color = '#16a34a';
+                }
             }
         });
+    }
+
+    // --- 7. MODUL 7: FETCH API, JSON, & ASYNC/AWAIT ---
+    const btnLoadApi = document.querySelector('#btn-load-api');
+    const btnRetry = document.querySelector('#btn-retry');
+    const apiMessage = document.querySelector('#api-message');
+    const apiOutput = document.querySelector('#api-output');
+
+    const USE_LOCAL_DATA = true; 
+    const apiEndpoint = USE_LOCAL_DATA 
+        ? './data/users.json' 
+        : 'https://jsonplaceholder.typicode.com/users';
+
+    async function loadUsers() {
+        if (!apiMessage || !apiOutput) return;
+
+        apiMessage.textContent = 'Memuat data dari server...';
+        apiMessage.style.color = '#2563eb';
+        apiOutput.replaceChildren();
+        if (btnRetry) btnRetry.style.display = 'none';
+
+        try {
+            const response = await fetch(apiEndpoint);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status} Gagal mengambil data.`);
+            }
+
+            const users = await response.json();
+            users.slice(0, 5).forEach(user => {
+                const li = document.createElement('li');
+                li.textContent = `${user.name} (${user.email}) - Kota: ${user.address?.city || 'N/A'}`;
+                apiOutput.append(li);
+            });
+
+            apiMessage.textContent = `Berhasil memuat ${users.length} data lokal.`;
+            apiMessage.style.color = '#16a34a';
+
+        } catch (error) {
+            console.error('Fetch Error:', error);
+            apiMessage.textContent = 'Data belum dapat dimuat. Periksa koneksi internet Anda.';
+            apiMessage.style.color = '#dc2626';
+            if (btnRetry) btnRetry.style.display = 'inline-block';
+        }
+    }
+
+    if (btnLoadApi) {
+        btnLoadApi.addEventListener('click', loadUsers);
+    }
+    if (btnRetry) {
+        btnRetry.addEventListener('click', loadUsers);
     }
 });

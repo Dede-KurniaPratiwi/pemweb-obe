@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Bini Yuta (Lokal)",
+    "email": "biniyuta@local.test",
+    "address": {
+      "city": "Tarakan"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Ahli Waris Utama",
+    "email": "notaris@warisan.test",
+    "address": {
+      "city": "Jakarta"
+    }
+  },
+  {
+    "id": 3,
+    "name": "Pengawas Keluarga",
+    "email": "pengawas@warisan.test",
+    "address": {
+      "city": "Surabaya"
+    }
+  }
+]

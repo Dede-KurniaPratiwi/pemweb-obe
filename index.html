@@ -168,6 +168,24 @@
                     <div id="daftar-alat" class="grid-aset" style="margin-top: 1rem; display: grid; gap: 1rem;"></div>
                 </section>
 
+                <!-- KOTAK 5: Integrasi REST API (Modul 7) -->
+                <section class="card wide-card">
+                    <h2>Integrasi REST API (Data Pengguna / Ahli Waris Eksternal)</h2>
+                    <p>Mengambil data secara asynchronous menggunakan Fetch, JSON, dan async/await.</p>
+                    
+                    <!-- Tombol Kontrol & Status -->
+                    <div style="margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: center;">
+                        <button id="btn-load-api" type="button" style="padding: 0.5rem 1rem; border-radius: 0.5rem; border: none; background: #2563eb; color: white; cursor: pointer; font-weight: bold;">Muat Data API</button>
+                        <button id="btn-retry" type="button" style="display: none; padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid var(--border); background: var(--surface); color: var(--text-main); cursor: pointer;">Coba Lagi (Retry)</button>
+                    </div>
+
+                    <!-- Pesan Status / Loading / Error -->
+                    <p id="api-message" style="font-weight: bold; margin-bottom: 0.5rem;"></p>
+
+                    <!-- Daftar Hasil Fetch API -->
+                    <ul id="api-output" style="list-style-type: disc; padding-left: 1.5rem; display: grid; gap: 0.5rem;"></ul>
+                </section>
+
             </main>
 
             <!-- FOOTER -->
