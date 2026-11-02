@@ -1,5 +1,13 @@
-###Catatan Penggunaan AI###
+# AI Usage Log - Proyek Pemrograman Web
 
-    * Kepemilikan Proyek: Seluruh proses perancangan, pengetikan kode di editor, integrasi sistem, serta pengujian akhir dilakukan secara mandiri oleh pengembang (mahasiswa).
-    * Peran AI: AI digunakan secara terbatas sebagai alat bantu konsultasi penulisan draf laporan dan referensi struktur logika penanganan validasi JavaScript.
-    * Proses Verifikasi: Setiap baris logika dan saran dari AI wajib diuji coba dan diverifikasi secara langsung di peramban melalui server lokal Laragon (http://localhost/pemweb-obe) untuk memastikan akurasi dan kesesuaian fungsionalitas dengan rubrik penilaian OBE.
+Log transparan ini mencatat penggunaan asisten AI dalam membantu proses pengembangan proyek individu **Portal Warisan Keluarga  Berbasis Web (*Notaris-Client Portal*)**.
+
+## 📝 Catatan Penggunaan AI
+* **Fungsi Bantuan:** 
+  1. Berdiskusi dalam merancang skema relasi basis data (3 tabel: `users`, `aset`, `distribusi_aset`).
+  2. Membantu memvalidasi sintaks kode *prepared statement* pada layer akses data PHP (PDO).
+  3. Menyusun format penulisan laporan refleksi mahasiswa dan dokumentasi teknis.
+* **Metode Verifikasi:**
+  * Seluruh kueri DDL diverifikasi dan dieksekusi langsung secara lokal melalui MySQL Workbench.
+  * Endpoint API diuji secara fungsional melalui peramban web (*browser*).
+  * Struktur kode diperiksa secara mandiri untuk memastikan keamanan dari celah *SQL Injection* serta mematuhi spesifikasi modul praktikum.
